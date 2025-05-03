@@ -1,0 +1,26 @@
+<!-- ai-assistant.html -->
+<!DOCTYPE html>
+<html>
+<head><title>AI Assistant</title></head>
+<body>
+<h1>Talk to Me!</h1>
+<button onclick="startAssistant()">🎤 Speak</button>
+<p id="response"></p>
+<script>
+function startAssistant() {
+  let recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+  recognition.start();
+  recognition.onresult = (e) => {
+    let cmd = e.results[0][0].transcript.toLowerCase();
+    let reply = "Sorry, I didn't get that.";
+    if (cmd.includes("hello")) reply = "Hi there!";
+    else if (cmd.includes("your name")) reply = "I'm your AI assistant.";
+    else if (cmd.includes("time")) reply = "It's " + new Date().toLocaleTimeString();
+    document.getElementById("response").innerText = reply;
+    let speech = new SpeechSynthesisUtterance(reply);
+    speechSynthesis.speak(speech);
+  };
+}
+</script>
+</body>
+</html>
